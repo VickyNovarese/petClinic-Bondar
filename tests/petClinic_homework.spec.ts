@@ -12,6 +12,7 @@ test("Home page is opened and Welcome message is displayed", async ({
 });
 
 test("Pet types are displayed correctly", async ({ page }) => {
+  
   const expectedPetTypes = [
     "cat",
     "dog",
@@ -21,21 +22,19 @@ test("Pet types are displayed correctly", async ({ page }) => {
     "hamster",
     "monkey",
   ];
-  await page.getByTitle("pettypes").click();
+  //1. Select the PET TYPES menu item in the navigation bar
+  await page.getByTitle("pettypes").click();  
+  //2. Add assertion of the "Pet Types" text displayed above the table with the list of pet types
   const inputs = page.locator('#pettypes tbody input[name="pettype_name"]');
   await expect(inputs.first()).toBeVisible();
-
   const countPetTypes = await inputs.count();
   const petTypes: string[] = [];
-
   for (let i = 0; i < countPetTypes; i++) {
     const name = await inputs.nth(i).inputValue();
     petTypes.push(name);
   }
-
   console.log("Pet Types:", petTypes);
   expect(expectedPetTypes).toEqual(petTypes);
-
   //3.Click on "Edit" button for the "cat" pet type
   const catRow = page.getByRole("row", { name: "cat" });
   await catRow.locator('button:has-text("Edit")').click();
