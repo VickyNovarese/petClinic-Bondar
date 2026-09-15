@@ -24,8 +24,14 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { 
-        browserName: 'chromium'
+        browserName: 'chromium',
+        storageState: '.auth/user.json',
       },
+    },
+
+    {
+      name: 'setup',
+      testMatch: '**/.auth/auth-setup.ts',
     },
   ],
 
